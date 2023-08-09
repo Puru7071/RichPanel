@@ -106,7 +106,9 @@ app.use(session({
 
 // //  these are neccessary middleware for passport.
 // app.use(passport.initialize()) ; 
-// app.use(passport.session()) ; 
+// app.use(passport.session()) ;
+
+app.use("/" , require("./routes/homePageRouter")) ; 
 
 app.listen(process.env.PORT || port , function(error){
     if(error){
