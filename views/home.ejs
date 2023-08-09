@@ -1,19 +1,45 @@
 <div class="txt-center welcome-heading">
     <h1>
-        Welcome to CloudConnect.
+        Create Account
     </h1>
 </div>
 
-<div id="who-are-u" class="txt-center">
-    <a href="/sign-in">
-        Are you an existing user? 
-    </a>
-    <br> <br>
-    <a href="/sign-up">
-        Create a new account.
-    </a>
-    <br> <br>
-    <a href="/users/auth/google">
-        Get in via Google.
-    </a>
-</div>
+<form action="users/sign-up" method="POST" id="sign-in-form">
+    
+    <label for="Name">
+        <font>Name</font> <i class="fas fa-level-down" style="position: relative; top: 4px;"></i>
+    </label>
+    <input id="Name" type="text" placeholder="Enter Your Name" required name="name"> 
+    <br>
+
+    <label for="email">
+        <font>Email</font> <i class="fas fa-level-down" style="position: relative; top: 4px;"></i>
+    </label><br>
+    <input type="email" required placeholder ="Enter Your Email" id="email" name="email">
+    <br>
+    
+
+    <label for="password">
+        <font>Password</font> <i class="fas fa-level-down" style="position: relative; top: 4px;"></i>
+    </label><br>
+    <input minlength="4" maxlength="20" id="password" type="password" placeholder="Create Password" required name="password" class="reduce-wdith-for-see-password">
+    
+    <input type="hidden" name="Bio" value="Tell people about yourself">
+   
+    <br>
+
+    <div id="remember-box">
+        <input type="checkbox" name="remember" value="yes" >
+        <label >Remember Me</label>
+    </div>
+
+
+    <button type="submit" id="btn-log-in">Sign-Up
+    </button>
+    
+   <div id="sign-in-question">
+        <a href="/sign-in">
+            <font >Already have an account?&nbsp;</font>Login 
+        </a>
+   </div>
+</form>
