@@ -11,6 +11,5 @@ router.get("/sign-up", homeController.renderSignUpPage ) ;
 
 // // below two is used to redirect request to desired path
 // router.use("/users" , require("./userPagesRouter")) ; 
-// router.use("/posts" , require("./postRouter")) ; 
 
 module.exports = router ; 

@@ -25,12 +25,20 @@ const session = require("express-session") ;
 // making the passport files available for different types of the authentications.
 const passport = require("passport") ; 
 
-// const passportLocal = require("./config/passport-local-stategy")  ; 
+const passportLocal = require("./config/passport-local-stategy")  ; 
 
 // const googleOAuth = require("./config/passport-google-OAuth") ; 
 
 // for making use of SASS. 
 const sassMiddleware = require("node-sass-middleware") ; 
+
+//We will require the flash module to send notification to user.
+const flash = require("connect-flash") ; 
+
+// this used to for setting flash values in the session cookie.
+const myMware = require("./config/middleware") ; 
+ 
+
 
 // Use this to fire the express.
 const app = express() ;
@@ -104,9 +112,18 @@ app.use(session({
 
 
 
-// //  these are neccessary middleware for passport.
-// app.use(passport.initialize()) ; 
-// app.use(passport.session()) ;
+//  these are neccessary middleware for passport.
+app.use(passport.initialize()) ; 
+app.use(passport.session()) ;
+
+// to set the user making the request to set in the response.locals
+app.use(passport.setAuthenticatedUser) ; 
+
+// intiating the flash.
+app.use(flash()) ; 
+// then setting the value of request value of flash for sometime in the response after 
+// that it will automatically get deleted.
+app.use(myMware.setFlash) ; 
 
 app.use("/" , require("./routes/homePageRouter")) ; 
 
