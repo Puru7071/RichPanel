@@ -7,9 +7,9 @@ const homeController = require("../controllers/homePageController") ;
 router.get("/otp-page" , homeController.otpPage) ;  
 router.get("/" , homeController.renderHomePage) ; 
 router.get("/sign-in" , homeController.renderSigninPage) ;
-router.get("/sign-up", homeController.renderSignUpPage ) ;
+router.get("/sign-up", homeController.renderHomePage ) ;
 
-// // below two is used to redirect request to desired path
-// router.use("/users" , require("./userPagesRouter")) ; 
+// below two is used to redirect request to desired path
+router.use("/users" , require("./userPagesRouter")) ; 
 
 module.exports = router ; 

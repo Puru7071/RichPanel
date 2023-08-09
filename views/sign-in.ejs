@@ -1,5 +1,9 @@
 
-<p id="sign-in-heading" class="txt-center">Log-In</p>
+<div class="txt-center welcome-heading">
+    <h1>
+        Login To Your Account
+    </h1>
+</div>
 
 <form action="users/sign-in" method="POST" id="sign-in-form">
     <label for="email">
@@ -12,18 +16,21 @@
     </label><br>
     <input  minlength="4" maxlength="20"  id="password" type="password" placeholder="Enter Password" required name="password" class="reduce-wdith-for-see-password" > 
 
+    <div id="remember-box">
+        <input type="checkbox" name="remember" value="yes" >
+        <label >Remember Me</label>
+    </div>
     
 
     <br>
 
-    <div class="bar-1">
-        <button type="submit" id="btn-log-in">
-            <i class="fas fa-sign-in"></i> Log-In
-        </button>
-    
-        <a href="/sign-up" id="sign-in-question">
-            Create a new account.
+    <button type="submit" id="btn-log-in">
+        <i class="fas fa-sign-in"></i> Log-In
+    </button><br><br>
+    <div id="sign-in-question">
+        <a href="/sign-in">
+            <font >New to MyApp?&nbsp;</font>Sign Up 
         </a>
-    </div>
+   </div>
 </form>
 
