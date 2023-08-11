@@ -3,372 +3,178 @@
     
     console.log("Script Loaded");
 
-    var commentSection = document.getElementsByClassName("view-comment-section");
-
-    for (let i = 0; i < commentSection.length; i += 1) {
-        commentSection[i].addEventListener("click", function (event) {
-            event.stopPropagation();
-
-            if (commentSection[i].getAttribute("data-isVisible") == "false") {
-                document.getElementsByClassName("comment-section")[i].style.display = "block";
-                document.getElementsByClassName("comment-box")[i].style.borderRadius = "0px";
-                document.getElementsByClassName("comment-box")[i].style.borderBottom = "0px";
-                commentSection[i].setAttribute("data-isVisible", "true");
-
-            }
-            else {
-                document.getElementsByClassName("comment-section")[i].style.display = "none";
-                document.getElementsByClassName("comment-box")[i].style.borderRadius = "0px 0px 20px 20px"
-                document.getElementsByClassName("comment-box")[i].style.borderBottom = "5px solid white";
-                commentSection[i].setAttribute("data-isVisible", "false");
-            }
-        });
-    }
-    var leftBtn = document.getElementsByClassName("slide-image-left");
-    var rightBtn = document.getElementsByClassName("slide-image-right");
-    var imageScreen = document.getElementsByClassName("large-image-box");
-    var currentPos = [];
-
-    for (let i = 0; i < leftBtn.length; i += 1) {
-        currentPos.push(0);
-    }
-
-
-    for (let i = 0; i < leftBtn.length; i += 1) {
-        leftBtn[i].addEventListener("click", function (event) {
-            event.stopPropagation();
-            if (currentPos[i] < 0) {
-                currentPos[i] += 500;
-                imageScreen[i].style.left = currentPos[i].toString() + "px";
-            }
-        });
-
-        rightBtn[i].addEventListener("click", function (event) {
-            event.stopPropagation();
-            console.log(imageScreen[i].getAttribute("data-imageNumber"));
-            let factor = parseInt(imageScreen[i].getAttribute("data-imageNumber")) - 1;
-            console.log(factor);
-            if (currentPos[i] > (factor * 500) * (-1)) {
-                currentPos[i] -= 500;
-                imageScreen[i].style.left = currentPos[i].toString() + "px";
-            }
-
-        });
-    }
-
-    $(".delete-button").click(function(event){
-        console.log("hello") ; 
-        event.preventDefault() ; 
-        let parent = $(event.target).parent()
-        $.ajax({
-            type : "get" ,
-            url : $(parent).prop('href'),  
-            success : function(data){
-                
-                $(`#post-${data.data.postId}`).remove() ; 
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: "Post Deleted Successfully !!!" , 
-                    type : "success" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            } , 
-            error : function(error){
-                console.log(error.responseText) ; 
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: `Something went wrong !!!` , 
-                    type : "error" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            }
-        })
-    }) ; 
-
-    $(".like").click(function(event){
-        console.log("hello") ; 
-        event.preventDefault() ; 
-        let parent = $(event.target).parent() ; 
-        $.ajax({
-            type : "get" , 
-            url : $(parent).prop('href'), 
-            success : function(data){
-                 
-                if(data.data.isLiked){
-                    $(`#like-${data.data.postId}`).html(`
-                        <i class="far fa-thumbs-up fa-2x"></i>
-                        <font>${data.data.likes}</font>
-                    `) ; 
-
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: "Unliked Post !!!" , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show() 
-                }else{
-                    $(`#like-${data.data.postId}`).html(`
-                        <i class="fas fa-thumbs-up fa-2x"></i>
-                        <font>${data.data.likes}</font>
-                    `) ; 
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: "Liked Post !!!" , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show() 
-                }
-                if(data.data.wasDisLiked){
-                    $(`#dislike-${data.data.postId}`).html(`
-                        <i class="far fa-thumbs-down fa-2x"></i>
-                        <font>${data.data.dislikes}</font>
-                    `)
-                }
-            } , 
-            error : function(error){
-                console.log(error.responseText) ; 
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: `Something went wrong !!!` , 
-                    type : "error" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            }
-        })
-    }) ; 
-
-
-    $(".dislike").click(function(event){
-        console.log("hello") ; 
-        event.preventDefault() ; 
-        let parent = $(event.target).parent() ; 
-        $.ajax({
-            type : "get" , 
-            url : $(parent).prop('href'), 
-            success : function(data){
-                console.log("hello" , data.data.postId) ; 
-                if(data.data.isdisLiked){
-                    $(`#dislike-${data.data.postId}`).html(`
-                        <i class="far fa-thumbs-down fa-2x"></i>                        
-                        <font>${data.data.dislikes}</font>
-                    `) ;
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: "Undo Dislike !!!" , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show() 
-                }else{
-                    $(`#dislike-${data.data.postId}`).html(`
-                        <i class="fas fa-thumbs-down fa-2x"></i>
-                        <font>${data.data.dislikes}</font>
-                    `) ; 
-                    
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: "Disliked Post !!!" , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show() 
-                }
-                if(data.data.wasLiked){
-                    $(`#like-${data.data.postId}`).html(`
-                        <i class="far fa-thumbs-up fa-2x"></i>
-                        <font>${data.data.likes}</font>
-                    `)
-                }
-            } , 
-            error : function(error){
-                console.log(error.responseText) ; 
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: `Something went wrong !!!` , 
-                    type : "error" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            }
-        })
-    }) ; 
-
-
-    $(".report-button").click(function(event){
-        console.log("hello") ; 
-        event.preventDefault() ; 
-        let parent = $(event.target).parent() ; 
-        $.ajax({
-            type : "get" , 
-            url : $(parent).prop('href'), 
-            success : function(data){
-                if(data.data.wasReported){
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: "Post Already Reported !!!" , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show()
-                }else{
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: "Post Reported !!!" , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show()
-                }
-                
-            } , 
-            error : function(error){
-                console.log(error.responseText) ; 
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: `Something went wrong !!!` , 
-                    type : "error" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            }
-        })
-    }) ; 
-
-
-    
-
-    $(".comment-box").submit(function(event){
-        
-        event.preventDefault() ; 
-        let element = $(event.target) ; 
-        $.ajax({
-            type : "post" , 
-            url : $(element).prop('action'), 
-            data: $(element).serialize(),
-            success : function(data){
-
-                let date = new Date() ; 
-                let newComment = `
-                <div class="comment-card" id = "comment-card-${data.data.commentId}">
-                    <div class="comment-creater">
-                        <i class="fas fa-user-circle"></i> ${data.data.commentCreater}
-                    </div><br>
-                    <div class="comment">
-                        ${data.data.commentContent}
-                    </div>
-                    <div class="comment-date">
-                        ${date} 
-                    </div>
-                    <a class="delete-button-comments" href="/posts/delete-comment/${data.data.commentId}" >
-                            <i class="fas fa-trash-alt "></i>
-                    </a>
-                </div>
-                ` ; 
-
-                console.log(data.data.commentId) ; 
-
-                $(`#comment-area-${data.data.postId}`).prepend(newComment) ; 
-                delComment() ; 
-
-                $(`#comments-${data.data.postId}`).html(`
-                    <i class="far fa-comment-alt fa-2x"></i>
-                    <font>${data.data.comments}</font>
-                `) ; 
-
-                $(".no-comments-heading").html("") ; 
-
-
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: `Comment Added !!!` , 
-                    type : "success" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            } , 
-            error : function(error){
-                console.log(error.responseText) ; 
-
-                new Noty({
-                    theme: 'semanticui' , 
-                    text: `Something went wrong !!!` , 
-                    type : "error" , 
-                    layout : "topRight" , 
-                    timeout : 1500 
-                }).show() 
-            }
-        })
-    }) ; 
-
-
-
-    let delComment = function(){
-        $(".delete-button-comments").click(function(event){
-         
-            event.preventDefault() ; 
-            let parent = $(event.target).parent() ; 
-            $.ajax({
-                type : "get" , 
-                url : $(parent).prop('href'), 
-                success : function(data){
-                    
-                    
-                    $(`#comment-card-${data.data.commentId}`).remove(); 
-                    $(`#comments-${data.data.postId}`).html(`
-                        <i class="far fa-comment-alt fa-2x"></i>
-                        <font>${data.data.comments}</font>
-                    `)
-    
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: `Comment Removed !!!` , 
-                        type : "success" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show()
-    
-    
-                } , 
-                error : function(error){
-                    console.log(error.responseText) ; 
-    
-                    new Noty({
-                        theme: 'semanticui' , 
-                        text: `Something went wrong !!!` , 
-                        type : "error" , 
-                        layout : "topRight" , 
-                        timeout : 1500 
-                    }).show() 
-                }
-            })
-        }) ; 
-        
-    }
-
-    delComment() ; 
-
-
-    document.getElementById("notification-button").addEventListener("click" , function(event){
+    document.getElementById("btn-c1").addEventListener("click" , (event) => {
         event.stopPropagation() ; 
 
-        document.getElementById("notification-bar").style.display = "block" ; 
+        document.getElementById("btn-c1").style.backgroundColor = "white" ; 
+        document.getElementById("btn-c1").style.color = "#1e4c91" ; 
+
+        document.getElementById("btn-c2").style.backgroundColor = "#1e4c91" ; 
+        document.getElementById("btn-c2").style.color = "white" ;
+        
+        document.getElementById("plan-details-month").style.display = "flex"; 
+        document.getElementById("plan-details-month").style.flexDirection = "column" ; 
+        document.getElementById("plan-details-year").style.display = "none" ; 
+
+        document.getElementById("timeline").value = "Monthly" ; 
 
     }) ; 
-    document.getElementById("close-noti-bar").addEventListener("click" , function(event){
+
+    document.getElementById("btn-c2").addEventListener("click" , (event) => {
         event.stopPropagation() ; 
 
-        document.getElementById("notification-bar").style.display = "none" ; 
+        document.getElementById("btn-c2").style.backgroundColor = "white" ; 
+        document.getElementById("btn-c2").style.color = "#1e4c91" ; 
+
+        document.getElementById("btn-c1").style.backgroundColor = "#1e4c91" ; 
+        document.getElementById("btn-c1").style.color = "white" ; 
+
+        document.getElementById("plan-details-month").style.display = "none"; 
+        document.getElementById("plan-details-year").style.display = "flex" ; 
+        document.getElementById("plan-details-year").style.flexDirection = "column" ; 
+
+        document.getElementById("timeline").value = "Yearly" ; 
+
     }) ; 
+
+    document.getElementById("type-teller-0").addEventListener("click" , (event)=>{
+        event.stopPropagation() ; 
+
+        document.getElementById("type-teller-0").style.opacity = "1" ; 
+        document.getElementById("type-teller-1").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-2").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-3").style.opacity = "0.5" ; 
+
+        document.getElementById("triangle-down-0").style.opacity = "1" ; 
+        document.getElementById("triangle-down-1").style.opacity = "0" ; 
+        document.getElementById("triangle-down-2").style.opacity = "0" ; 
+        document.getElementById("triangle-down-3").style.opacity = "0" ;
+
+        var elements = document.querySelectorAll(".Mobile"); 
+  
+        elements.forEach(function(element) {
+            element.style.color = "#1e4c91"; // Change the color to blue
+        });
+
+        var classNames = ["Standard", "Basic", "Premium"]; // Add your class names here
+
+        classNames.forEach(function(className) {
+            var elements = document.querySelectorAll("." + className); // Select elements with the specific class name
+            
+            elements.forEach(function(element) {
+            element.style.color = "#a6a5a5"; // Change the color to blue
+            });
+        });
+        
+        document.getElementById("type").value = "Mobile"
+        
+        
+    })
+
+    document.getElementById("type-teller-3").addEventListener("click" , (event)=>{
+        event.stopPropagation() ; 
+
+        document.getElementById("type-teller-0").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-1").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-2").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-3").style.opacity = "1" ; 
+
+        document.getElementById("triangle-down-0").style.opacity = "0" ; 
+        document.getElementById("triangle-down-1").style.opacity = "0" ; 
+        document.getElementById("triangle-down-2").style.opacity = "0" ; 
+        document.getElementById("triangle-down-3").style.opacity = "1" ;
+        
+        var elements = document.querySelectorAll(".Premium"); 
+
+        elements.forEach(function(element) {
+            element.style.color = "#1e4c91"; // Change the color to blue
+        });
+
+        var classNames = ["Standard", "Basic", "Mobile"]; // Add your class names here
+
+        classNames.forEach(function(className) {
+            var elements = document.querySelectorAll("." + className); // Select elements with the specific class name
+            
+            elements.forEach(function(element) {
+            element.style.color = "#a6a5a5"; // Change the color to blue
+            });
+        });
+        
+        document.getElementById("type").value = "Premium" ; 
+    })
+
+
+    document.getElementById("type-teller-1").addEventListener("click" , (event)=>{
+        event.stopPropagation() ; 
+
+        document.getElementById("type-teller-0").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-1").style.opacity = "1" ; 
+        document.getElementById("type-teller-2").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-3").style.opacity = "0.5" ; 
+
+        document.getElementById("triangle-down-0").style.opacity = "0" ; 
+        document.getElementById("triangle-down-1").style.opacity = "1" ; 
+        document.getElementById("triangle-down-2").style.opacity = "0" ; 
+        document.getElementById("triangle-down-3").style.opacity = "0" ; 
+
+        var elements = document.querySelectorAll(".Basic"); 
+
+        elements.forEach(function(element) {
+            element.style.color = "#1e4c91"; // Change the color to blue
+        });
+
+        var classNames = ["Standard", "Premium", "Mobile"]; // Add your class names here
+
+        classNames.forEach(function(className) {
+            var elements = document.querySelectorAll("." + className); // Select elements with the specific class name
+            
+            elements.forEach(function(element) {
+            element.style.color = "#a6a5a5"; // Change the color to blue
+            });
+        });
+        
+        document.getElementById("type").value = "Basic" ; 
+        
+    })
+
+
+    document.getElementById("type-teller-2").addEventListener("click" , (event)=>{
+        event.stopPropagation() ; 
+
+        document.getElementById("type-teller-0").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-1").style.opacity = "0.5" ; 
+        document.getElementById("type-teller-2").style.opacity = "1" ; 
+        document.getElementById("type-teller-3").style.opacity = "0.5" ; 
+
+        document.getElementById("triangle-down-0").style.opacity = "0" ; 
+        document.getElementById("triangle-down-1").style.opacity = "0" ; 
+        document.getElementById("triangle-down-2").style.opacity = "1" ; 
+        document.getElementById("triangle-down-3").style.opacity = "0" ; 
+        
+
+        var elements = document.querySelectorAll(".Standard"); 
+
+        elements.forEach(function(element) {
+            element.style.color = "#1e4c91"; // Change the color to blue
+        });
+
+        var classNames = ["Basic", "Premium", "Mobile"]; // Add your class names here
+
+        classNames.forEach(function(className) {
+            var elements = document.querySelectorAll("." + className); // Select elements with the specific class name
+            
+            elements.forEach(function(element) {
+            element.style.color = "#a6a5a5"; // Change the color to blue
+            });
+        });
+        
+
+
+        document.getElementById("type").value = "Standard" ; 
+
+
+    })
+    
+
 
 })();  

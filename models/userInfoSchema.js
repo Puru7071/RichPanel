@@ -1,8 +1,6 @@
 // we need same instance of the data base established before.
 const mongoose = require("mongoose") ; 
 
-
-
 const userSchema = mongoose.Schema({
     email : {
         type : String , 
@@ -16,7 +14,19 @@ const userSchema = mongoose.Schema({
     name : {
         type: String , 
         required : true 
-    } 
+    } ,
+    subs_Monthly : [
+        {
+            type : mongoose.Schema.Types.ObjectId , 
+            ref : "subsMonthly"
+        } 
+    ] ,
+    subs_Yearly : [
+        {
+            type : mongoose.Schema.Types.ObjectId , 
+            ref : "subsYearly"
+        } 
+    ]
 } , {
     timestamps : true 
 }) ; 

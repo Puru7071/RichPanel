@@ -1,0 +1,104 @@
+body {
+  background-color: #1f4d91; }
+
+.main-body {
+  width: 70%;
+  margin: auto;
+  height: 270px;
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 13%;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  font-family: arial; }
+  .main-body .payment-form {
+    padding-left: 5%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; }
+    .main-body .payment-form .heading-payment {
+      height: 20px; }
+      .main-body .payment-form .heading-payment div {
+        font-size: 2.25rem;
+        font-weight: bold;
+        color: #37383a; }
+      .main-body .payment-form .heading-payment font {
+        position: relative;
+        top: -12px;
+        left: 3px;
+        color: #b5b5b4; }
+  .main-body .order-summary {
+    width: 40%;
+    height: 100%;
+    background-color: #f5f5f6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-left: 2.5%; }
+    .main-body .order-summary .order-summary-heading {
+      color: #414142;
+      font-size: 1.4rem;
+      font-family: arial;
+      font-weight: bold;
+      margin-bottom: 20px; }
+    .main-body .order-summary .order-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 40px;
+      width: 85%;
+      border-bottom: 2px solid #eaeaeb;
+      color: #494a4a;
+      padding-left: 3px;
+      padding-right: 3px; }
+
+#payment-form {
+  width: 100%; }
+
+.card-details {
+  width: 100%;
+  display: flex;
+  border: 2px solid #8c8c8e;
+  border-radius: 5px; }
+  .card-details img {
+    opacity: 0.3;
+    margin-left: 0.5%; }
+  .card-details input {
+    flex: 1;
+    margin-right: 10px;
+    height: 25px;
+    width: 100%;
+    padding: 5px;
+    /* Add some padding */
+    font-size: 14px;
+    /* Set font size */
+    outline: none;
+    border: none;
+    color: #787878; }
+  .card-details input:focus {
+    outline: none;
+    color: #787878; }
+  .card-details .card-number-input {
+    display: flex;
+    flex: 2;
+    margin-right: 5px;
+    width: 100%;
+    font-size: 14px; }
+  .card-details .corner-fields {
+    flex: 1;
+    display: flex; }
+
+.btn-submit {
+  height: 45px;
+  width: 35%;
+  border: none;
+  background-color: #1f4d91;
+  color: white;
+  font-family: arial;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer; }

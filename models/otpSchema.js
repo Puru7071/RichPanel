@@ -16,7 +16,13 @@ const OTPschema = mongoose.Schema({
     name : {
         type: String , 
         required : true 
-    } 
+    } ,
+    subs : [
+        {
+            type : mongoose.Schema.Types.ObjectId , 
+            ref : "users"
+        } 
+    ]
 } , {
     timestamps : true 
 }) ; 

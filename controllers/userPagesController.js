@@ -1,9 +1,17 @@
 // Some of the DB documents required for the this controllere file to function properly.
 const users = require("../models/userInfoSchema") ; 
-const OTP = require("../models/otpSchema") ; 
+const OTP = require("../models/otpSchema") ;
+
+const subsMonthly = require("../models/subsSchemaMonthly") ; 
+const monthlyPlans = require("../db/monthlySubs") ; 
+
+const subsYearly = require("../models/subsSchemaYearly") ; 
+const yearlyPlans = require("../db/yearlySubs") ;
+
+const dummySubs = require("../models/dummySubscr") ; 
+
 
 const otpMailer = require("../mailer/OTPMailer") ; 
-
 const { populate } = require("../models/userInfoSchema");
 
 // these are the required modules for the controller file to work.
@@ -87,70 +95,104 @@ module.exports.checkOTP = async function(request , response){
 }
 
 // made this controller function asynchronous so one function is executed before moving to next.
-module.exports.showProfile = async function(request , response){
-    try{
-        // finding the post of the user 
-        let posts = await post.find({user : request.params.id})
-        .populate("user") // then populating the user field  with info user info it is ref to via user ID.
-        .populate({
-            path: "comments" , // populating all comments with comments its refering to via it comment ID its refering to.
-            populate: {     // then populating the each comment's field user with user's info it is refering to.
-                path: "user"
-            }
-        });
+// // module.exports.showProfile = async function(request , response){
+//     try{
+//         // finding the post of the user 
+//         let posts = await post.find({user : request.params.id})
+//         .populate("user") // then populating the user field  with info user info it is ref to via user ID.
+//         .populate({
+//             path: "comments" , // populating all comments with comments its refering to via it comment ID its refering to.
+//             populate: {     // then populating the each comment's field user with user's info it is refering to.
+//                 path: "user"
+//             }
+//         });
         
-        console.log("showing posts") ; 
-        console.log(posts) ; 
+//         console.log("showing posts") ; 
+//         console.log(posts) ; 
         
 
-        posts.reverse() ; // reversing the post array so as to get most recent post at the top.
-        let user = await users.findById(request.params.id) ; // then finding the targeted user of which profile is
-        // being openned.
+//         posts.reverse() ; // reversing the post array so as to get most recent post at the top.
+//         let user = await users.findById(request.params.id) ; // then finding the targeted user of which profile is
+//         // being openned.
 
-        // Then finding all the comments being made by the user whose profile is bieng openned. 
-        let allComments = await comments.find({user: request.params.id}).
-        populate("user");  // then populating the each comment's field user with user it is refering to.
+//         // Then finding all the comments being made by the user whose profile is bieng openned. 
+//         let allComments = await comments.find({user: request.params.id}).
+//         populate("user");  // then populating the each comment's field user with user it is refering to.
 
 
-        console.log(user) ; 
-        allComments.reverse() ; // reversing the comments array so as to get most recent post at the top.
-        return response.render("userProfile" , {
-            layout : "userProfile.ejs" , 
-            posts : posts , 
-            isHome : false ,
-            targetUser : user , 
-            allComments : allComments 
-        }) ;
-    }
-    catch(error){
-        //if error then give notification via Noty.
-        console.error(`Sonething went wrong --> ${error}`) ; 
-        request.flash("error" , "Something went wrong") ; 
-        response.redirect("back") ; // and going back.
-    }
-}
+//         console.log(user) ; 
+//         allComments.reverse() ; // reversing the comments array so as to get most recent post at the top.
+//         return response.render("userProfile" , {
+//             layout : "userProfile.ejs" , 
+//             posts : posts , 
+//             isHome : false ,
+//             targetUser : user , 
+//             allComments : allComments 
+//         }) ;
+//     }
+//     catch(error){
+//         //if error then give notification via Noty.
+//         console.error(`Sonething went wrong --> ${error}`) ; 
+//         request.flash("error" , "Something went wrong") ; 
+//         response.redirect("back") ; // and going back.
+//     }
+// }
   
 // made this controller function asynchronous so one function is executed before moving to next.
 module.exports.showHomePage = async function(request , response){
     try{
-        //finding all the posts in db.
-        let posts = await post.find({})
-        .populate("user") // then populating the user field  with info user info it is ref to via user ID.
-        .populate({
-            path : "comments" , // populating all comments with comments its refering to via it comment ID its refering to.
-            populate : { // then populating the each comment's field user with user's info it is refering to.
-                path : "user"
+        var arr1 = monthlyPlans.monthly_plans ; 
+        console.log(arr1.length) ; 
+        for(i = 0 ; i < arr1.length ; i ++){
+            console.log(arr1[i]) ; 
+            var plan1 = await subsMonthly.findOne({ name: arr1[i].name });
+            if(plan1){
+                plan1.monthly_price = arr1[i].monthly_price ; 
+                plan1.resolution = arr1[i].resolution ; 
+                plan1.video_quality = arr1[i].video_quality ; 
+                plan1.device_type = arr1[i].device_type ; 
+                plan1.screen_number = arr1[i].screen_number ; 
+                plan1.save()  ; 
             }
-        }) ; 
-        let notis = await notifications.find({owner: request.user._id}) ; 
+            else{
+                plan1 = await subsMonthly.create(arr1[i]); 
+                console.log("New Plan Added Successfully" + plan1) ; 
+            }
+        }
 
-        notis.reverse() ; 
-        posts.reverse() ; // reversing the post array so as to get most recent post at the top.
+        var arr2 = yearlyPlans.yearly_plans ; 
+        console.log(arr2.length) ; 
+        for(i = 0 ; i < arr2.length ; i ++){
+            console.log(arr2[i]) ; 
+            var plan1 = await subsYearly.findOne({ name: arr2[i].name });
+            if(plan1){
+                plan1.yearly_price = arr2[i].yearly_price ; 
+                plan1.resolution = arr2[i].resolution ; 
+                plan1.video_quality = arr2[i].video_quality ; 
+                plan1.device_type = arr2[i].device_type ; 
+                plan1.screen_number = arr2[i].screen_number ; 
+                plan1.save()  ; 
+            }
+            else{
+                plan1 = await subsYearly.create(arr2[i]); 
+                console.log("New Plan Added Successfully" + plan1) ; 
+            }
+        }
+        var fields1 = ["Monthly Price" , "Resolution" , "Video Quality" , "Device you can use to watch"] ; 
+        var ref1 = ["monthly_price" , "resolution" , "video_quality" , "device_type"] ; 
+
+        var fields2 = ["Yearly Price" , "Resolution" , "Video Quality" , "Device you can use to watch"] ; 
+        var ref2 = ["yearly_price" , "resolution" , "video_quality" , "device_type"] ; 
+
+        var timeLine = ["Mobile" , "Basic" , "Standard" , "Premium"] ; 
+
         return response.render("userHomePage.ejs" , {
             layout : "userHomePage.ejs" , 
-            posts : posts ,
-            isHome : true , 
-            notis : notis 
+            monthlyPlans : monthlyPlans.monthly_plans, 
+            yearlyPlans : yearlyPlans.yearly_plans ,
+            fields1 : fields1 , ref1 : ref1 , 
+            fields2 : fields2 , ref2 : ref2 , 
+            timeLine : timeLine
         }) ;
     }catch(error){
         //if error then give notification via Noty.
@@ -159,46 +201,48 @@ module.exports.showHomePage = async function(request , response){
         return response.redirect("back") ; // and going back.
     }
 }
-// below controller function is used to update or add Bio for the Logged in user.
-module.exports.addBio = async function(request , response){
-    try{
-        // finding the user via user id passed on through params.
-        let user = await users.findById(request.params.id)  ; 
-        // using the multer function defined in the schema.
-        
-        users.uploadedAvatar(request , response , function(error){
-            if(error){
-                // if error then give notification via multer.
-                console.error(`Something went wrong: ${error}`) ; 
-                request.flash("error" , "Something went wrong") ; 
-                return response.redirect("back") ; 
-            }
-            if(request.body.Bio){
-                //  if bio is there then we set or update the personalInfo.
-                user.personlInfo = request.body.Bio ; 
-                request.flash("success" , "Bio Updated Successfully") ; 
-            }
-            if(request.file){
-                // If there is avatar file  then we need to update or set avatar file
-                console.log(`$$$$$$$$$$$$$$ ${request.file} @@@@@@@@@@@@@@@222`) ; 
-                
-                // now setting the avatar's path in the avatar of the user
-                user.avatar =  request.file.location; 
-                console.log(request.file) ; 
-                
-                request.flash("success" , "Bio Updated Successfully") ; 
-            }
-            // Now making the changes permanent not changing in RAM only.
-            user.save() ; 
-            return response.redirect("back") ; 
-        }) ; 
-    }catch(error){
-        // return back if error and give notification via Noty.
-        console.error(`Something went wrong--> ${error}`) ; 
-        request.flash("error","Something went wrong") ;  
-        return response.redirect("back") ; 
+
+module.exports.makeDummyPayment = async function(request , response){
+    var plan ; 
+
+    if(request.body.timeline == "Monthly"){
+        plan = await subsMonthly.findOne({name : request.body.type}) ;
+        const subs = await dummySubs.create({
+            uid : request.user._id ,
+            timeline : request.body.timeline ,
+            type : request.body.type , 
+            amountPayable : plan.monthly_price
+        });  
+
+        return response.render("payment.ejs" , {
+            layout : "payment.ejs" , 
+            uid : subs.uid , 
+            timeline: subs.timeline , 
+            type : subs.type , 
+            amountPayable : subs.amountPayable , 
+            pre : "/mon"
+        }) ;
+    }
+    else{
+        plan = await subsYearly.findOne({name : request.body.type}) ;
+        const subs = await dummySubs.create({
+            uid : request.user._id ,
+            timeline : request.body.timeline ,
+            type : request.body.type , 
+            amountPayable : plan.yearly_price
+        });  
+
+        return response.render("payment.ejs" , {
+            layout : "payment.ejs" , 
+            uid : subs.uid , 
+            timeline: subs.timeline , 
+            type : subs.type , 
+            amountPayable : subs.amountPayable , 
+            pre : "/yr"
+        }) ;
     }
 }
+
 // setting up home page for the valid users. 
 module.exports.createSessionForValidUserMainMethod = function(request , response){
     request.flash("success" , "Logged in Successfully!!!") ; 
@@ -213,34 +257,4 @@ module.exports.destroySession = function(request , resposne){
     return resposne.redirect("/") ; 
 }
 
-// rendering the live Update page.
-module.exports.showLiveUpdates = function(request , response){
-    return response.render("liveUpdates" , {
-        layout : "liveUpdates.ejs" 
-    }) ; 
-}
-// rendering the Show Vaccination Center page.
-module.exports.showVaccinationCenter = function(request , response){
-    return response.render("showVac" , {
-        layout : "showVac.ejs"
-    }) ; 
-}
-// rendering the Show About US page.
-module.exports.showAboutUS = function(request , response){
-    return response.render("showAboutUs", {
-        layout : "showAboutUs.ejs" 
-    }) ; 
-}
-// rendering the Show World Map page.
-module.exports.showWmap = function(request , response){
-    return response.render("showWmap" , {
-        layout: "showWmap.ejs" 
-    }) ; 
-}
-// rendering the Show Latest News page.
-module.exports.showLnews = function(request , response){
-    return response.render("showLNews" , {
-        layout : "showLNews.ejs" , 
-        nothing: "true"
-    }) ; 
-}
+

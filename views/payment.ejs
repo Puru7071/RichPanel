@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Stripe | Payment Page
+    </title>
+    <link rel="shorcut icon" type="image/x-icon" href="/images/fevion.png">
+    <script src="https://kit.fontawesome.com/22406f9d4d.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.staticaly.com/gh/hung1001/font-awesome-pro/4cac1a6/css/all.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/css/payment.css"> 
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"> 
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
+    
+</head>
+<body>
+    <div class="main-body">
+        <div class="payment-form">
+            <div class="heading-payment">
+                <div>
+                    Complete Payment
+                </div><br>
+                <font>
+                    Enter your Debit Card or Credit Card Details Below
+                </font>
+            </div>
+
+ 
+            <form id="payment-form" method="post" action="/complete-payement">
+                <div class="card-details">
+                  <div class="card-number-input">
+                    <img src="/images/cc.svg">
+                    <input type="text" required="true" id="card-number" name="card-number" placeholder="Card Number" autocomplete="off" minlength="16">
+                  </div>
+
+
+                  <div class="corner-fields">
+                    <input type="text" required="true" id="expiration" name="expiration" placeholder="MM / YY" autocomplete="off">
+                    <input type="text" required="true" id="cvc" name="cvc" placeholder="CVC" autocomplete="off" maxlength="3">
+                  </div>
+
+                  <input type="hidden" value="<%= uid%>"> 
+                  <input type="hidden" value="<%= timeline%>">
+                  <input type="hidden" value="<%= type%>">
+                  <input type="hidden" value="<%= amountPayable%>">
+
+                </div>
+                
+                <button type="button" class="btn-submit">Confirm Payment</button>
+              </form>
+
+        </div>
+        <div class="order-summary">
+            <div class="order-summary-heading">
+                Order Summary
+            </div>
+
+            <div class="order-details">
+                <div>
+                    Plan Name
+                </div>
+                <div>
+                    <%= type%>
+                </div>
+            </div>
+
+            <div class="order-details">
+                <div>
+                    Billing Cycle
+                </div>
+                <div>
+                    <%= timeline%>
+                </div>
+            </div>
+
+            <div class="order-details">
+                <div>
+                    Plan Price
+                </div>
+                <div>
+                    <%= amountPayable%>/<%= pre%>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="js/entryJs.js"></script>
+
+</body>
+</html>

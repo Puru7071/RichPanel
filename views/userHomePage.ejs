@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Home Page | CloudConnect
+        Stripe | Home Page
     </title>
 
 
@@ -13,61 +14,245 @@
 
 
     <script src="https://kit.fontawesome.com/22406f9d4d.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.staticaly.com/gh/hung1001/font-awesome-pro/4cac1a6/css/all.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.staticaly.com/gh/hung1001/font-awesome-pro/4cac1a6/css/all.css" rel="stylesheet"
+        type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css">
-    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
 
-    
 
-    <link rel="stylesheet" type="text/css" href="/css/user.css"> 
-    <link rel="stylesheet" type="text/css" href="/css/user-home.css"> 
-    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"> 
-    <script src= "https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/user-home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <script></script>
 </head>
+
 <body>
 
-    
+
     <script>
-        <% if(flash.success && flash.success.length > 0){%>
+        <% if (flash.success && flash.success.length > 0) {%>
             new Noty({
-                theme: 'semanticui' , 
-                text: "<%= flash.success%>" , 
-                type : "success" , 
-                layout : "topRight" , 
-                timeout : 3000 
-            }).show() 
-        <%}%>
-        <% if(flash.error && flash.error.length > 0){%>
+                theme: 'semanticui',
+                text: "<%= flash.success%>",
+                type: "success",
+                layout: "topRight",
+                timeout: 3000
+            }).show()
+            <%}%>
+        <% if (flash.error && flash.error.length > 0) {%>
             new Noty({
-                theme: 'semanticui' , 
-                text: "<%= flash.error%>" , 
-                type : "error" , 
-                layout : "topRight" , 
-                timeout : 3000 
-            }).show() 
-        <%}%>
+                theme: 'semanticui',
+                text: "<%= flash.error%>",
+                type: "error",
+                layout: "topRight",
+                timeout: 3000
+            }).show()
+            <%}%>
     </script>
 
-    <%- include("header") %>
-    <%- include("postP") %>
 
-    <%- include("asideSection.ejs") %>
+    <div id="home-heading">
+        <h1>
+            Choose the right plan for you
+        </h1>
+    </div>
 
-    <%- include("notificationBar") %>
+    <div class="bricks-main">
+        <div class="time-teller">
+            <div class="btn-chooser" id="btn-c1">
+                <font>Monthly</font>
+            </div>
+            <div class="btn-chooser" id="btn-c2">
+                <font>Yearly</font>
+            </div>
+        </div>
+
+        <div class="plan-teller">
+            <% for(let i=0 ; i < monthlyPlans.length ; i ++){%>
+                <%if(i==0){%>
+                    <div class="type-teller" id = "type-teller-<%= i%>">
+                        <%= monthlyPlans[i].name %>
+                            <div class="triangle-down" id="triangle-down-<%= i%>"></div>
+                    </div>
+                    <%}else{%>
+                        <div class="type-teller wage-effect " id = "type-teller-<%= i%>">
+                            <%= monthlyPlans[i].name %>
+                                <div class="triangle-down hide-class" id="triangle-down-<%= i%>"></div>
+                        </div>
+                        <%}%>
+                    <%}%>
+        </div>
+    </div>
+
+    <div class="plan-details" id="plan-details-month">
+
+        <% for (let i=0; i < fields1.length; i++) { %>
+            <%if(i > 0){%>
+                <div class="plan-brick special_border">
+                    <div class="plan-brick-name">
+                        <%= fields1[i] %>
+                    </div>
     
+                    <div class="plan-brick-details">
+                        <% let key=ref1[i]; %>
+    
+                        <% for (let j=0; j < monthlyPlans.length; j++) { %>
+                            <% if (j===0) { %>
+                                
+                                <%if(i === fields1.length-1){%>
+                                    <div class="details select-color last-row <%= timeLine[j]%>">
+                                        <% const devices =(monthlyPlans[j][key]); %>
+                                        <%for(let device of devices){%>
+                                            <%= device %> <br><br>
+                                        <%}%>
+                                    </div>
+                                <%}else{%>
+                                    <div class="details select-color <%= timeLine[j]%>">
+                                        <%= monthlyPlans[j][key] %>
+                                    </div>    
+                                <%}%>
+                            <% } else { %>
+                                <%if(i === fields1.length-1){%>
+                                    <div class="details special-color last-row <%= timeLine[j]%>">
+                                        <% const devices = (monthlyPlans[j][key]); %>
+                                        <%for(let device of devices){%>
+                                            <%= device %> <br><br>
+                                        <%}%>
+                                    </div>
+                                <%}else{%>
+                                    <div class="details special-color <%= timeLine[j]%>">
+                                        <%= monthlyPlans[j][key] %> 
+                                    </div>   
+                                <%}%>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            <%}else{%>
+                <div class="plan-brick ">
+                    <div class="plan-brick-name">
+                        <%= fields1[i] %>
+                    </div>
+
+                    <div class="plan-brick-details">
+                        <% let key=ref1[i]; %>
+
+                            <% for (let j=0; j < monthlyPlans.length; j++) { %>
+                                <% if (j===0) { %>
+                                    <div class="details select-color <%= timeLine[j]%>">
+                                        <%= monthlyPlans[j][key] %>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="details special-color <%= timeLine[j]%>">
+                                            <%= monthlyPlans[j][key] %>
+                                        </div>
+                                    <% } %>
+                            <% } %>
+                    </div>
+                </div>
+            <%}%>
+        <% } %>
+    </div>
+
+    <div class="plan-details remove-details" id="plan-details-year">
+
+        <% for (let i=0; i < fields2.length; i++) { %>
+            <%if(i > 0){%>
+                <div class="plan-brick special_border">
+                    <div class="plan-brick-name">
+                        <%= fields2[i] %>
+                    </div>
+    
+                    <div class="plan-brick-details ">
+                        <% let key=ref2[i]; %>
+    
+                        <% for (let j=0; j < yearlyPlans.length; j++) { %>
+                            <% if (j===0) { %>
+                                
+                                <%if(i === fields2.length-1){%>
+                                    <div class="details select-color last-row <%= timeLine[j]%>">
+                                        <% const devices =(yearlyPlans[j][key]); %>
+                                        <%for(let device of devices){%>
+                                            <%= device %> <br><br>
+                                        <%}%>
+                                    </div>
+                                <%}else{%>
+                                    <div class="details select-color <%= timeLine[j]%>">
+                                        <%= yearlyPlans[j][key] %>
+                                    </div>    
+                                <%}%>
+                            <% } else { %>
+                                <%if(i === fields2.length-1){%>
+                                    <div class="details special-color last-row <%= timeLine[j]%>">
+                                        <% const devices = (yearlyPlans[j][key]); %>
+                                        <%for(let device of devices){%>
+                                            <%= device %> <br><br>
+                                        <%}%>
+                                    </div>
+                                <%}else{%>
+                                    <div class="details special-color <%= timeLine[j]%>">
+                                        <%= yearlyPlans[j][key] %> 
+                                    </div>   
+                                <%}%>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            <%}else{%>
+                <div class="plan-brick ">
+                    <div class="plan-brick-name">
+                        <%= fields2[i] %>
+                    </div>
+
+                    <div class="plan-brick-details">
+                        <% let key=ref2[i]; %>
+
+                            <% for (let j=0; j < yearlyPlans.length; j++) { %>
+                                <% if (j===0) { %>
+                                    <div class="details select-color <%= timeLine[j]%>">
+                                        <%= yearlyPlans[j][key] %>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="details special-color <%= timeLine[j]%> ">
+                                            <%= yearlyPlans[j][key] %>
+                                        </div>
+                                        <% } %>
+                                            <% } %>
+                    </div>
+                </div>
+            <%}%>
+
+            
+        <% } %>
+    </div>
+
+    <form class="sub-form" action="submit" method = "POST">
+
+        <input type="hidden" value = "Monthly" name = "timeline" id="timeline">
+
+        <input type="hidden" value= "Mobile" name = "type" id="type">
+
+        <button type="submit"  id="submit-form" >
+            Next
+        </button>
+
+    </form>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
 
     <script>
-        $(".emoji-comment-also-there").emojioneArea({
-            pickerPosition : "top" , 
-        })
+            $(".emoji-comment-also-there").emojioneArea({
+                pickerPosition: "top",
+            })
 
-       
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="/js/homeJS.js"></script>
 
 </body>
+
 </html>

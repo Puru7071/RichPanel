@@ -8,7 +8,7 @@ module.exports.otpPage = function(request , response) {
         // profile page.
         // What actually this function do is that it checks the session cookie for the user id and decryptes it 
         // then find whether that user exits in Users DB.
-        return response.redirect("/users/profile/" + request.user.id) ; 
+        return response.redirect("/users/home-page") ; 
     }
     console.log("Sign-In Page Rendered") ; 
     var data = {
@@ -24,7 +24,7 @@ module.exports.renderSigninPage = function(request , response){
         // profile page.
         // What actually this function do is that it checks the session cookie for the user id and decryptes it 
         // then find whether that user exits in Users DB.
-        return response.redirect("/users/profile/" + request.user.id) ; 
+        return response.redirect("/users/home-page") ; 
     }
     // If user is not logged in then 
     console.log("Sign-In Page Rendered") ; 
@@ -38,7 +38,7 @@ module.exports.renderSigninPage = function(request , response){
 // rendering the Sign-up page controller.
 module.exports.renderSignUpPage = function(request , response){
     if(request.isAuthenticated()){
-        return response.redirect("/users/profile/" + request.user.id) ; 
+        return response.redirect("/users/home-page") ; 
     }
     console.log("Sign-Up Page Rendered") ; 
     var data = {
@@ -51,7 +51,7 @@ module.exports.renderSignUpPage = function(request , response){
 // rendering the main page of website controller.
 module.exports.renderHomePage = function(request , response){
     if(request.isAuthenticated()){
-        return response.redirect("/users/profile/" + request.user.id) ; 
+        return response.redirect("/users/home-page") ; 
     }
     console.log("Home Page Rendered") ; 
     var data = {

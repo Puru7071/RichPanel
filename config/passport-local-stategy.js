@@ -16,25 +16,21 @@ passport.use(new LocalStrategy({
     passReqToCallback: true
 } , 
 
-    function(req, email , password , done){
+    async function(req, email , password , done){
         // finding the user with the given email id. 
-        Users.findOne({email : email} , function(error , user){
-            if(error){
-                // incase of some error we notification to the user via Noty.
-                req.flash("error","Something went wrong.") ; 
-                return done(error) ; // giving done function error.
+        try {
+            const user = await Users.findOne({ email: email });
+          
+            if (!user || user.password !== password) {
+              req.flash('error', 'No such user found.');
+              return done(null, false);
             }
-
-            if(!user || user.password != password){
-                // incase of password wrong we tell the user that no suer found via Noty.
-                req.flash("error","No such user found.") ; 
-                return done(null , false) ; // giving false to done as no user is found and 
-                // no identity should be established.
-            }
-
-            return done(null , user) ; // giving the user found to done so that
-            // corresponding identity can be established.
-        })
+          
+            return done(null, user);
+          } catch (error) {
+            req.flash('error', 'Something went wrong.');
+            return done(error);
+          }
     }
 
 )) ; 
@@ -49,13 +45,21 @@ passport.serializeUser(function(user , done){
 
 // finding the user from the session cookie stored and remember this is done on the server side 
 // so no need to worry about it.
-passport.deserializeUser(function(id , done){
-    Users.findById(id , function(error ,user){
-        if(error){
-            return done(error) ; 
+passport.deserializeUser(async function(id , done){
+    try {
+        const user = await Users.findById(id);
+      
+        if (!user) {
+          req.flash('error', 'No user found.');
+          return done(null, false);
         }
-        return done(null , user) ; 
-    }) ; 
+      
+        return done(null, user);
+
+      } 
+      catch (error) {
+        return done(error);
+      }
 }) ; 
 
 passport.checkAuthentication = function(request , response , next){

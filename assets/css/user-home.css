@@ -1,0 +1,153 @@
+body {
+  background-color: white;
+  margin: 0px;
+  padding: 0px;
+  padding-bottom: 20px; }
+
+a {
+  text-decoration: none; }
+
+.hide-class {
+  opacity: 0; }
+
+.wage-effect {
+  opacity: 0.5; }
+
+.special-color {
+  color: #a6a5a5; }
+
+.select-color {
+  color: #1e4c91; }
+
+.special_border {
+  border-top: 2px solid #858585; }
+
+.remove-details {
+  display: none; }
+
+#home-heading {
+  width: 100%;
+  position: relative;
+  left: -2%;
+  top: -5px;
+  color: #3d3d3d;
+  height: auto;
+  font-family: arial;
+  text-align: center;
+  margin-bottom: 30px; }
+
+.bricks-main {
+  width: 72%;
+  height: auto;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .bricks-main .time-teller {
+    width: 200px;
+    height: 60px;
+    background-color: #1e4c91;
+    border-radius: 100px;
+    display: flex;
+    padding: 1%;
+    box-sizing: border-box;
+    justify-content: space-between; }
+    .bricks-main .time-teller .btn-chooser {
+      width: 90px;
+      height: 40px;
+      border-radius: 100px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-family: arial;
+      margin-bottom: 0px;
+      position: relative; }
+    .bricks-main .time-teller #btn-c1 {
+      background-color: white;
+      color: #1e4c91;
+      font-weight: bold;
+      cursor: pointer; }
+    .bricks-main .time-teller #btn-c2 {
+      color: white;
+      cursor: pointer; }
+  .bricks-main .plan-teller {
+    width: 67%;
+    display: flex;
+    justify-content: space-around;
+    font-family: arial;
+    font-weight: bold; }
+    .bricks-main .plan-teller .type-teller {
+      width: 120px;
+      height: 100px;
+      background-color: #1e4c91;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      cursor: pointer; }
+      .bricks-main .plan-teller .type-teller .triangle-down {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 13px solid #1e4c91;
+        /* Adjust color and size as needed */
+        position: absolute;
+        top: 100px; }
+
+.plan-details {
+  width: 72%;
+  margin: auto;
+  margin-top: 30px;
+  height: auto;
+  font-family: arial; }
+  .plan-details .plan-brick {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .plan-details .plan-brick .plan-brick-name {
+      width: 300px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      color: #a0a1a0; }
+    .plan-details .plan-brick .plan-brick-details {
+      width: 67%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-family: arial;
+      font-weight: bold; }
+      .plan-details .plan-brick .plan-brick-details .details {
+        width: 120px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+      .plan-details .plan-brick .plan-brick-details .last-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        text-align: center;
+        padding-top: 10px; }
+
+.sub-form {
+  position: absolute;
+  width: 72%;
+  bottom: 15px;
+  left: calc(50vw - 135px); }
+  .sub-form button {
+    width: 270px;
+    height: 45px;
+    background-color: #1e4c90;
+    color: white;
+    font-family: monospace;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer; }
