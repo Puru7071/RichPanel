@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Stripe | Success Payment 
+    </title>
+    <link rel="shorcut icon" type="image/x-icon" href="/images/fevion.png">
+    <script src="https://kit.fontawesome.com/22406f9d4d.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.staticaly.com/gh/hung1001/font-awesome-pro/4cac1a6/css/all.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/css/paymentSuccess.css"> 
+    <link rel="stylesheet" type="text/css" href="/css/paymentFail.css"> 
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"> 
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
+    
+</head>
+<body>
+    <div class="main-body">
+        <div class="header">
+            <div>
+                Current Plan Details <img src="/images/cancel.png" class="img-active">
+            </div>
+            <div>
+            </div>
+
+        </div>
+        
+        <div class="plan-line">
+            <%= plan.name%>
+        </div>
+
+        <div class="devices">
+            <% for (let i = 0; i < plan.device_type.length; i++) { %>
+                <%= plan.device_type[i] %><% if (i !== plan.device_type.length - 1) { %> + <% } %>
+              <% } %>
+        </div>
+
+        <div class="price">
+            <%= price%>
+
+        </div>
+
+        <div>
+            <button class="change-plan">
+                Change Plan
+            </button>
+        </div>
+
+        <div class="endLine">
+            Your subscription was can cancelled and you will loose access to services on 
+            <%= startDate%>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript" src="js/payment.js"></script>
+
+</body>
+</html>

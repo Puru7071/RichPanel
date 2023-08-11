@@ -1,0 +1,87 @@
+body {
+  background-color: #1f4d91; }
+
+.main-body {
+  width: 43%;
+  height: 300px;
+  background-color: white;
+  position: relative;
+  top: 150px;
+  margin: auto;
+  border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px; }
+  .main-body .header {
+    width: 100%;
+    height: auto;
+    font-family: arial;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #4e4f51;
+    display: flex;
+    justify-content: space-between; }
+  .main-body .img-active {
+    position: relative;
+    top: 4.5px; }
+  .main-body .btn-cancel {
+    color: #1f4d91;
+    font-family: arial;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    top: 5px;
+    left: -15px;
+    cursor: pointer; }
+  .main-body .price {
+    font-family: arial;
+    font-weight: bold;
+    font-size: 2rem;
+    position: relative;
+    height: 60px;
+    top: 20px;
+    color: #686767;
+    display: flex;
+    justify-content: left;
+    align-items: center; }
+  .main-body .plan-line {
+    color: #8d8d8d;
+    font-family: arial;
+    font-size: 1rem;
+    margin-top: 20px;
+    font-weight: bold; }
+  .main-body .devices {
+    font-family: arial;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #9e9fa0;
+    position: relative;
+    top: 10px; }
+  .main-body .change-plan {
+    border: 2px solid #4269a2;
+    background-color: white;
+    color: #1f4d91;
+    width: 150px;
+    height: 39px;
+    font-size: 0.9rem;
+    font-family: arial;
+    border-radius: 5px;
+    font-weight: bold;
+    position: relative;
+    top: 25px; }
+  .main-body .endLine {
+    position: relative;
+    top: 35px;
+    color: #878788;
+    background-color: #f6f6f8;
+    font-family: arial;
+    width: 95%;
+    height: 45px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px; }

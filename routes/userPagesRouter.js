@@ -9,6 +9,8 @@ const router = express.Router() ;
 const passport = require('passport');
 
 const userController = require("../controllers/userPagesController") ; 
+const paymentController = require("../controllers/paymentController") ; 
+const paymentCancelController = require("../controllers/cancelPayment") ; 
 
 
 // here passport.checkAuthentication is just another middleware that make sure the user is authenticated
@@ -17,6 +19,10 @@ const userController = require("../controllers/userPagesController") ;
 // //here note that :id is param 
 
 router.get("/home-page" , passport.checkAuthentication , userController.showHomePage) ; 
+
+router.post("/complete-payement" , paymentController.makePayment) ;
+
+router.post("/delete" , paymentCancelController.cancelPayement) ;
 
 router.post("/sign-up" , userController.createNewUser) ;
 

@@ -29,27 +29,26 @@
             </div>
 
  
-            <form id="payment-form" method="post" action="/complete-payement">
+            <form id="payment-form" method="post" action="/users/complete-payement">
                 <div class="card-details">
                   <div class="card-number-input">
                     <img src="/images/cc.svg">
-                    <input type="text" required="true" id="card-number" name="card-number" placeholder="Card Number" autocomplete="off" minlength="16">
+                    <input type="text" , required="true" id="card-number" name="card" placeholder="Card Number"> 
                   </div>
 
 
                   <div class="corner-fields">
                     <input type="text" required="true" id="expiration" name="expiration" placeholder="MM / YY" autocomplete="off">
-                    <input type="text" required="true" id="cvc" name="cvc" placeholder="CVC" autocomplete="off" maxlength="3">
+                    <input type="text" required="true" id="cvc" name="cvc" placeholder="CVC" autocomplete="off">
                   </div>
 
-                  <input type="hidden" value="<%= uid%>"> 
-                  <input type="hidden" value="<%= timeline%>">
-                  <input type="hidden" value="<%= type%>">
-                  <input type="hidden" value="<%= amountPayable%>">
-
+                  <input type="hidden" value="<%= uid%>" name="uid"> 
+                  <input type="hidden" value="<%= timeline%>" name="timeline">
+                  <input type="hidden" value="<%= type%>" name="type">
+                  <input type="hidden" value="<%= amountPayable%>" name="amountPayable">
                 </div>
                 
-                <button type="button" class="btn-submit">Confirm Payment</button>
+                <button type="submit" class="btn-submit">Confirm Payment</button>
               </form>
 
         </div>
@@ -87,7 +86,9 @@
 
         </div>
     </div>
-    <script type="text/javascript" src="js/entryJs.js"></script>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript" src="js/payment.js"></script>
 
 </body>
 </html>

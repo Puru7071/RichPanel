@@ -203,6 +203,8 @@ module.exports.showHomePage = async function(request , response){
 }
 
 module.exports.makeDummyPayment = async function(request , response){
+    var user = await users.findOne({id : request.user._id}) ; 
+    console.log(user); 
     var plan ; 
 
     if(request.body.timeline == "Monthly"){
@@ -220,7 +222,7 @@ module.exports.makeDummyPayment = async function(request , response){
             timeline: subs.timeline , 
             type : subs.type , 
             amountPayable : subs.amountPayable , 
-            pre : "/mon"
+            pre : "/mon" , 
         }) ;
     }
     else{
@@ -238,7 +240,7 @@ module.exports.makeDummyPayment = async function(request , response){
             timeline: subs.timeline , 
             type : subs.type , 
             amountPayable : subs.amountPayable , 
-            pre : "/yr"
+            pre : "/yr" 
         }) ;
     }
 }
